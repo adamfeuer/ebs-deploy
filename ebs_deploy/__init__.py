@@ -389,11 +389,17 @@ class EbsHelper(object):
 
     def get_env_sizing_metrics(self, env_name):
         asg = self.get_asg(env_name)
-        return asg.min_size, asg.max_size, asg.desired_capacity
+        if asg:
+            return asg.min_size, asg.max_size, asg.desired_capacity
+        else:
+            return None, None, None
 
     def get_asg(self, env_name):
         asg_name = self.get_asg_name(env_name)
-        asg = self.autoscale.get_all_groups(names=[asg_name])[0]
+        asgs = self.autoscale.get_all_groups(names=[asg_name])
+        asg = None
+        if asgs:
+            asg = asgs[0]
         return asg
 
     def get_asg_name(self, env_name):
