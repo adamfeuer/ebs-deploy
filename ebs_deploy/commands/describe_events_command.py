@@ -1,6 +1,5 @@
-import time
-from ebs_deploy import out, get, parse_env_config, parse_option_settings, upload_application_archive
-from datetime import datetime
+from ebs_deploy import utcnow_isoformat
+
 
 def add_arguments(parser):
     """
@@ -15,7 +14,7 @@ def execute(helper, config, args):
     """
     environment_name = args.environment
 
-    (events, next_token) = helper.describe_events(environment_name, start_time=datetime.now().isoformat())
+    (events, next_token) = helper.describe_events(environment_name, start_time=utcnow_isoformat())
 
     # swap C-Names
     for event in events:

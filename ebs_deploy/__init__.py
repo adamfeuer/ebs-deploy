@@ -20,6 +20,10 @@ LOGGER_NAME = 'ebs_deploy'
 MAX_RED_SAMPLES = 20
 
 
+def utcnow_isoformat():
+    return datetime.utcnow().isoformat() + 'Z'
+
+
 def out(message):
     """
     print alias
@@ -544,6 +548,7 @@ class EbsHelper(object):
         """
         Describes events from the given environment
         """
+
         events = self.ebs.describe_events(
             application_name=self.app_name,
             environment_name=environment_name,
@@ -580,7 +585,7 @@ class EbsHelper(object):
         seen_events = list()
 
         for env_name in environment_names:
-            (events, next_token) = self.describe_events(env_name, start_time=datetime.now().isoformat())
+            (events, next_token) = self.describe_events(env_name, start_time=utcnow_isoformat())
             for event in events:
                 seen_events.append(event)
 
@@ -650,7 +655,7 @@ class EbsHelper(object):
 
                 # log events
                 try:
-                    (events, next_token) = self.describe_events(env_name, start_time=datetime.now().isoformat())
+                    (events, next_token) = self.describe_events(env_name, start_time=utcnow_isoformat())
                 except BotoServerError as e:
                     if not e.error_code == 'Throttling':
                         raise
