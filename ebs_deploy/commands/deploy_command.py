@@ -1,4 +1,4 @@
-from ebs_deploy import get, parse_env_config, parse_option_settings, upload_application_archive
+from ebs_deploy import utcnow_isoformat, get, parse_env_config, parse_option_settings, upload_application_archive
 
 
 def add_arguments(parser):
@@ -28,7 +28,7 @@ def execute(helper, config, args):
         directory=args.directory, version_label=version_label)
 
     import datetime
-    start_time = datetime.datetime.utcnow().isoformat()
+    start_time = utcnow_isoformat()
     # deploy it
     helper.deploy_version(env_name, version_label)
 
