@@ -3,8 +3,8 @@ from setuptools import setup
 setup(
 
     # general meta
-    name='ebs-deploy',
-    version='1.9.23',
+    name='mb-ebs-deploy',
+    version='1.9.24',
     author='Brian C. Dilley, MetaBrite',
     author_email='brian.dilley@gmail.com',
     description='Python based command line tools for managing '
